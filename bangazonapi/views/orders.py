@@ -19,10 +19,10 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
             view_name="order",
             lookup_field='id'
         )
-        fields = ('id', 'created_at', 'customer', 'payment_type')
+        fields = ('id', 'created_at', 'customer_id', 'payment_type_id')
 
 
-class Orders(Viewset):
+class Orders(ViewSet):
     """Orders for Bangazon API"""
 
     # Handles POST
@@ -67,7 +67,7 @@ class Orders(Viewset):
             Response -- JSON serialized list of orders
         """
         # list of order instances
-        orders = Orders.objects.all()
+        orders = Order.objects.all()
         # takes orders and converts to JSON
         serializer = OrderSerializer(
             orders,
