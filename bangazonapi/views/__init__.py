@@ -1,2 +1,2 @@
-from .products import Product
-from .orderproduct import OrderProducts
+from .products import Products
+from .orderproducts import OrderProducts

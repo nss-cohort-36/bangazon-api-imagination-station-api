@@ -21,7 +21,7 @@ class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = OrderProduct
         url = serializers.HyperlinkedIdentityField(
-            view_name='order_product',
+            view_name='orderproduct',
             lookup_field='id'
         )
         fields = ('id', 'url', 'order_id', 'product_id', )
