@@ -43,4 +43,36 @@ class Orders(Viewset):
 
         return Response(serializer.data)
 
+    
+    # handles GET one ( the /<some_number in url tells it that)
+    def retrieve(self, request, pk=None):
+        """Handle GET requests for a single order.
 
+        Returns:
+            Response -- JSON serialized Order instance
+        """
+        try:
+            order = Order.objects.get(pk=pk)
+            serializer = OrderSerializer(order, context={'request': request})
+            return Response(serializer.data)
+        except Exception as ex:
+            return HttpResponseServerError(ex)
+
+
+    # handles GET all
+    def list(self, request):
+        """Handle GET requests to orders resource
+
+        Returns:
+            Response -- JSON serialized list of orders
+        """
+        # list of order instances
+        orders = Orders.objects.all()
+        # takes orders and converts to JSON
+        serializer = OrderSerializer(
+            orders,
+            many=True,
+            context={'request': request}
+        )
+        # Return the JSON
+        return Response(serializer.data)
