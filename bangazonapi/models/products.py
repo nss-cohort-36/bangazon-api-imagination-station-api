@@ -1,6 +1,6 @@
 from django.db import models
 from .customers import Customer
-from .product_types import ProductType
+from .producttypes import ProductType
 
 
 class Product(models.Model):
