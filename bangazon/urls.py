@@ -18,7 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from bangazonapi.models import *
-from bangazonapi.views import Products
+from bangazonapi.views import Products, register_user, login_user
 
 router = routers.DefaultRouter(trailing_slash=False)
 
