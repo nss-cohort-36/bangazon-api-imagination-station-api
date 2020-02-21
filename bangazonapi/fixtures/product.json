@@ -1,0 +1,17 @@
+[
+  {
+    "model": "bangazonapi.product",
+    "pk": 1,
+    "fields": {
+      "name": "Tyke Bike",
+      "price": 30.00,
+      "quantity": 1,
+      "description": "A mighty bike for tiny tykes",
+      "location": "Nashville",
+      "image_path": "./none_pic.jpg",
+      "created_at": "2020-02-21 00:00:00",
+      "customer_id": 1,
+      "product_type_id": 1
+    }
+  }
+]
