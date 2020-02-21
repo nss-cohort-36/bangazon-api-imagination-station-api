@@ -24,3 +24,23 @@ class Customer(models.Model):
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
+ 
+# These receiver hooks allow you to continue to
+# work with the `User` class in your Python code.
+
+
+# Every time a `User` is created, a matching `Customer`
+# object will be created and attached as a one-to-one
+# property
+
+@receiver(post_save, sender=User)
+def create_customer(sender, instance, created, **kwargs):
+    if created:
+        Customer.objects.create(user=instance)
+
+# Every time a `User` is saved, its matching `Customer`
+# object will be saved.
+@receiver(post_save, sender=User)
+def save_customer(sender, instance, **kwargs):
+    instance.customer.save()   
+
