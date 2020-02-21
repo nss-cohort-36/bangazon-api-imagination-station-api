@@ -1,6 +1,11 @@
 from django.db import models
 
 class ProductType(models.Model):
+    '''
+    This class creates the model for product types
+
+    Author: Ryan Crowley
+    '''
 
     name = models.CharField(max_length=55)
 
