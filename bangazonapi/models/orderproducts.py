@@ -2,7 +2,7 @@ from django.db import models
 from .orders import Order
 from .products import Product
 
-class OrderProduct(models.model):
+class OrderProduct(models.Model):
     """
         This represents a Order Product object
 
@@ -15,7 +15,6 @@ class OrderProduct(models.model):
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
 
     class Meta:
-        ordering = ("-create_at",)
         verbose_name = ("order product")
         verbose_name_plural = ("order products")
 
