@@ -21,4 +21,26 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         )
         fields = ('id', 'created_at', 'customer', 'payment_type')
 
-        
+
+class Orders(Viewset):
+    """Orders for Bangazon API"""
+
+    # Handles POST
+    def create(self, request):
+        """Handle POST operations
+
+        Returns:
+            Response -- JSON serialized Order instance
+        """
+        new_order = Order()
+        new_order.customer_id = request.auth.user.id
+        new_order.save()
+
+        serializer = OrderSerializer(
+            new_order,
+            context={'request': request}
+            )
+
+        return Response(serializer.data)
+
+
