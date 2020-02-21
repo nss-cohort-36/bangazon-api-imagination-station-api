@@ -1,0 +1,9 @@
+[
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 1,
+    "fields": {
+      "name": "Baby Mobility"
+    }
+  }
+]
