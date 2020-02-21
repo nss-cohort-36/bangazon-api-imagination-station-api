@@ -1,4 +1,4 @@
-"""Park products for bangazon Amusement Park"""
+"""products for bangazon"""
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
@@ -7,8 +7,8 @@ from rest_framework import status
 from bangazonapi.models import Product
 
 
-class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    """JSON serializer for park products
+class ProductsSerializer(serializers.HyperlinkedModelSerializer):
+    """JSON serializer for products
 
     Arguments:
         serializers
@@ -20,11 +20,12 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'url', 'name', 'price', 'description',
-                  'quantity', 'location', 'image_path', )
+                  'quantity', 'location', 'image_path', 'customer_id', 'product_type_id')
+        depth = 2
 
 
-class Product(ViewSet):
-    """Park products for bangazon Amusement Park"""
+class Products(ViewSet):
+    """products for bangazon"""
 
     def create(self, request):
         """Handle POST operations
@@ -41,29 +42,30 @@ class Product(ViewSet):
         new_product.image_path = request.data["image_path"]
         new_product.customer_id = request.data["customer_id"]
         new_product.product_type_id = request.data["product_type_id"]
+
         new_product.save()
 
-        serializer = ProductSerializer(
+        serializer = ProductsSerializer(
             new_product, context={'request': request})
 
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
-        """Handle GET requests for single park product
+        """Handle GET requests for single product
 
         Returns:
-            Response -- JSON serialized park product instance
+            Response -- JSON serialized product instance
         """
         try:
             product = Product.objects.get(pk=pk)
-            serializer = ProductSerializer(
+            serializer = ProductsSerializer(
                 product, context={'request': request})
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
 
     def update(self, request, pk=None):
-        """Handle PUT requests for a park product
+        """Handle PUT requests for a product
 
         Returns:
             Response -- Empty body with 204 status code
@@ -82,7 +84,7 @@ class Product(ViewSet):
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
     def destroy(self, request, pk=None):
-        """Handle DELETE requests for a single park product
+        """Handle DELETE requests for a single product
 
         Returns:
             Response -- 200, 404, or 500 status code
@@ -100,12 +102,12 @@ class Product(ViewSet):
             return Response({'message': ex.args[0]}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def list(self, request):
-        """Handle GET requests to park products resource
+        """Handle GET requests to products resource
 
         Returns:
-            Response -- JSON serialized list of park products
+            Response -- JSON serialized list of products
         """
         products = Product.objects.all()
-        serializer = ProductSerializer(
+        serializer = ProductsSerializer(
             products, many=True, context={'request': request})
         return Response(serializer.data)
