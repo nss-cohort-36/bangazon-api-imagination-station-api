@@ -23,7 +23,7 @@ class ProductSerializer(serializers.HyperlinkedModelSerializer):
                   'quantity', 'location', 'image_path', )
 
 
-class Products(ViewSet):
+class Product(ViewSet):
     """Park products for bangazon Amusement Park"""
 
     def create(self, request):

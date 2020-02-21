@@ -23,6 +23,7 @@ from bangazonapi.views import *
 router = routers.DefaultRouter(trailing_slash=False)
 # This is just a generic route
 # router.register(r'plural', ViewName, 'singular')
+router.register(r'products' Product, 'product')
 
 urlpatterns = [
     path('', include(router.urls)),
