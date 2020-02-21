@@ -19,3 +19,20 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+
+from django.urls import include, path
+from rest_framework import routers
+from rest_framework.authtoken.views import obtain_auth_token
+from bangazonapi.models import *
+from bangazonapi.views import *
+
+router = routers.DefaultRouter(trailing_slash=False)
+# This is just a generic route
+# router.register(r'plural', ViewName, 'singular')
+
+urlpatterns = [
+    path('', include(router.urls)),
+    path('api-token-auth/', obtain_auth_token),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+]
