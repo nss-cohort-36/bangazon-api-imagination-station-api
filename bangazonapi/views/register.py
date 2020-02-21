@@ -61,6 +61,7 @@ def register_user(request):
         user=new_user
     )
 
+    #!Don't need this since we are using objects.create
     # Commit the user to the database by saving it
     # customer.save()
 
