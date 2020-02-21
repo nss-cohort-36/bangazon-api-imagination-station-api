@@ -17,6 +17,7 @@ class Customer(models.Model):
     is_active = models.BooleanField()
 
     class Meta:
+        ordering = ("-created_at",)
         verbose_name = ("customer")
         verbose_name_plural = ("customers")
 
