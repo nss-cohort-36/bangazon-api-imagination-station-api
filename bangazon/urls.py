@@ -25,6 +25,9 @@ router = routers.DefaultRouter(trailing_slash=False)
 # router.register(r'plural', ViewName, 'singular')
 # router.register(r'products' Product, 'product')
 
+router.register(r'orderproducts', OrderProducts, 'orderproduct')
+
+
 urlpatterns = [
     path('', include(router.urls)),
     path('api-token-auth/', obtain_auth_token),
