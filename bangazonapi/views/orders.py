@@ -76,3 +76,17 @@ class Orders(Viewset):
         )
         # Return the JSON
         return Response(serializer.data)
+
+
+    # handles PUT
+    def update(self, request, pk=None):
+        """Handle PUT requests for an order
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        order = Order.objects.get(pk=pk)
+        order.payment_type_id = request.data["payment_type_id"]
+        order.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
