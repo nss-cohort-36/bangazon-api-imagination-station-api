@@ -1,2 +1,2 @@
-from .products import Product
+from .products import Products
 from .paymenttypes import PaymentTypes
