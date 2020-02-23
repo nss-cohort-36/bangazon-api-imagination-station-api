@@ -108,6 +108,16 @@ class Products(ViewSet):
             Response -- JSON serialized list of products
         """
         products = Product.objects.all()
+
+        product_name = self.request.query_params.get('name', None)
+        product_location = self.request.query_params.get('location', None)
+
+        if product_name is not None:
+            products = products.filter(name=product_name)
+
+        if product_location is not None:
+            products = products.filter(location=product_location)
+
         serializer = ProductsSerializer(
             products, many=True, context={'request': request})
         return Response(serializer.data)
