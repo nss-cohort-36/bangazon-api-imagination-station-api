@@ -12,7 +12,6 @@ class Customer(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-    is_active = models.BooleanField()
 
     class Meta:
         ordering = ("-created_at",)

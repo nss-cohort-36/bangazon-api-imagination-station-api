@@ -18,12 +18,15 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from bangazonapi.models import *
+from bangazonapi.views import Products, register_user, login_user, Orders, Customers, Users
 from bangazonapi.views import Products, register_user, login_user, Orders, PaymentTypes, OrderProducts
 
 router = routers.DefaultRouter(trailing_slash=False)
 
 # This is just a generic route
 # router.register(r'plural', ViewName, 'singular')
+router.register(r'users', Users, 'user')
+router.register(r'customers', Customers, 'customer')
 router.register(r'paymenttypes', PaymentTypes, 'paymenttype')
 router.register(r'products', Products, 'product')
 router.register(r'orders', Orders, 'order')

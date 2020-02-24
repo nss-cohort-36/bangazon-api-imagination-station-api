@@ -53,11 +53,11 @@ def register_user(request):
         email=req_body['email'],
         password=req_body['password'],
         first_name=req_body['first_name'],
-        last_name=req_body['last_name']
+        last_name=req_body['last_name'],
+        is_active=True
     )
 
     customer = Customer.objects.create(
-        is_active=True,
         user=new_user
     )
 
