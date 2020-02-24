@@ -18,8 +18,7 @@ from django.urls import include, path
 from rest_framework import routers
 from rest_framework.authtoken.views import obtain_auth_token
 from bangazonapi.models import *
-from bangazonapi.views import Products, PaymentTypes
-from bangazonapi.views import register_user, login_user
+from bangazonapi.views import Products, register_user, login_user, Orders, PaymentTypes
 
 router = routers.DefaultRouter(trailing_slash=False)
 
@@ -27,6 +26,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 # router.register(r'plural', ViewName, 'singular')
 router.register(r'paymenttypes', PaymentTypes, 'paymenttype')
 router.register(r'products', Products, 'product')
+router.register(r'orders', Orders, 'order')
 
 urlpatterns = [
     path('', include(router.urls)),
