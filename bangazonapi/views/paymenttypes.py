@@ -22,7 +22,7 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='paymenttype',
             lookup_field='id'
         )
-        fields = ('id', 'merchant_name', 'account_number',  'expiration_date', 'customer')
+        fields = ('id', 'merchant_name', 'account_number',  'expiration_date', 'customer_id')
 
 class PaymentTypes(ViewSet):
     '''
@@ -33,7 +33,7 @@ class PaymentTypes(ViewSet):
     Author: Lauren Riddle
     '''
 
-    def retrieve(self, request):
+    def retrieve(self, request, pk=None):
         '''
         Handles GET requests for a single payment type
 
@@ -59,7 +59,7 @@ class PaymentTypes(ViewSet):
         newpaymenttype.merchant_name = request.data['merchant_name']
         newpaymenttype.account_number = request.data['account_number']
         newpaymenttype.expiration_date = request.data['expiration_date']
-        newpaymenttype.customer_id = request.auth.user.id
+        newpaymenttype.customer_id = request.auth.user.customer.id
 
         newpaymenttype.save()
 
@@ -86,7 +86,7 @@ class PaymentTypes(ViewSet):
         # return repsonse as JSON
         return Response(serializer.data)
 
-    def destroy(self, request):
+    def destroy(self, request, pk=None):
         '''
         Handles DELETE request for a single payment type
 
@@ -99,7 +99,7 @@ class PaymentTypes(ViewSet):
 
         try: 
             type = PaymentType.objects.get(pk=pk)
-            type.delete()
+            type.delete(force_policy=None)
 
             return Response({}, status=status.HTTP_204_NO_CONTENT)
 
