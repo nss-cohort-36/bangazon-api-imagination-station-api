@@ -4,6 +4,8 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from bangazonapi.models import Order
+from .customers import CustomersSerializer
+
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for park areas
@@ -12,6 +14,8 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
         serializers.HyperlinkedModelSerializer
     """
 
+    customer = CustomersSerializer()
+
     class Meta:
         model = Order
         # creates a clickable url for the API
@@ -19,7 +23,9 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
             view_name="order",
             lookup_field='id'
         )
-        fields = ('id', 'created_at', 'customer_id', 'payment_type_id')
+        fields = ('id', 'created_at', 'customer', 'payment_type_id')
+
+        depth = 2
 
 
 class Orders(ViewSet):
