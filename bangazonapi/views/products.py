@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from bangazonapi.models import Product
+from .customers import CustomersSerializer
 
 
 class ProductsSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,6 +14,9 @@ class ProductsSerializer(serializers.HyperlinkedModelSerializer):
     Arguments:
         serializers
     """
+
+    customer = CustomersSerializer()
+
     class Meta:
         model = Product
         url = serializers.HyperlinkedIdentityField(
@@ -20,7 +24,7 @@ class ProductsSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         fields = ('id', 'url', 'name', 'price', 'description',
-                  'quantity', 'location', 'image_path', 'customer_id', 'product_type_id')
+                  'quantity', 'location', 'image_path', 'customer', 'product_type', )
         depth = 2
 
 
@@ -108,6 +112,16 @@ class Products(ViewSet):
             Response -- JSON serialized list of products
         """
         products = Product.objects.all()
+
+        product_name = self.request.query_params.get('name', None)
+        product_location = self.request.query_params.get('location', None)
+
+        if product_name is not None:
+            products = products.filter(name=product_name)
+
+        if product_location is not None:
+            products = products.filter(location=product_location)
+
         serializer = ProductsSerializer(
             products, many=True, context={'request': request})
         return Response(serializer.data)
