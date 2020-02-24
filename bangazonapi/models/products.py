@@ -19,8 +19,10 @@ class Product(models.Model):
     location = models.CharField(max_length=75)
     image_path = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-    customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-    product_type = models.ForeignKey(ProductType, on_delete=models.DO_NOTHING)
+    customer = models.ForeignKey(
+        Customer, on_delete=models.DO_NOTHING, related_name="customers")
+    product_type = models.ForeignKey(
+        ProductType, on_delete=models.DO_NOTHING, related_name="product_types")
 
     class Meta:
         ordering = ("-created_at",)
