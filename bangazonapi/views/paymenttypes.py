@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from bangazonapi.models import PaymentType
+from .customers import CustomersSerializer
+
 
 
 class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
@@ -15,6 +17,7 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
     Author: Lauren Riddle
 
     '''
+    customer = CustomersSerializer()
 
     class Meta:
         model = PaymentType
@@ -22,7 +25,8 @@ class PaymentTypeSerializer(serializers.HyperlinkedModelSerializer):
             view_name='paymenttype',
             lookup_field='id'
         )
-        fields = ('id', 'merchant_name', 'account_number',  'expiration_date', 'customer_id')
+        fields = ('id', 'merchant_name', 'account_number',  'expiration_date', 'customer')
+        depth = 2
 
 class PaymentTypes(ViewSet):
     '''
