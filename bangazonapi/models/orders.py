@@ -11,11 +11,7 @@ class Order(models.Model):
     """
 
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
-<<<<<<< HEAD
-    payment_type = models.ForeignKey(PaymentType,null=True, on_delete=models.DO_NOTHING)
-=======
     payment_type = models.ForeignKey(PaymentType, on_delete=models.DO_NOTHING, null=True)
->>>>>>> master
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
 
     class Meta:
