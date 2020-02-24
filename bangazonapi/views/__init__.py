@@ -4,3 +4,6 @@ from .register import login_user
 from .products import Products
 from .orders import Orders
 from .customers import Customers, Users
+from .orderproducts import OrderProducts
+from .paymenttypes import PaymentTypes
+from .orders import Orders
