@@ -6,4 +6,3 @@ from .orders import Orders
 from .customers import Customers, Users
 from .orderproducts import OrderProducts
 from .paymenttypes import PaymentTypes
-from .orders import Orders

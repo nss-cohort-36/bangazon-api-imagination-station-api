@@ -7,6 +7,8 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from bangazonapi.models import Customer
 
+#! This is a nested serialzer; PAY ATTENTION
+
 class UsersSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for users
 
@@ -19,7 +21,7 @@ class UsersSerializer(serializers.HyperlinkedModelSerializer):
             view_name='user',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'last_name', 'first_name', 'email')
+        fields = ('id', 'url', 'username', 'last_name', 'first_name', 'email')
        
 class CustomersSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for customers
@@ -27,6 +29,9 @@ class CustomersSerializer(serializers.HyperlinkedModelSerializer):
     Arguments:
         serializers
     """
+
+    user = UsersSerializer()
+
     class Meta:
         model = Customer
         url = serializers.HyperlinkedIdentityField(
@@ -34,7 +39,7 @@ class CustomersSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         depth = 2
-        fields = ('id', 'user', 'created_at')
+        fields = ('id', 'user',)
 
 class Users(ViewSet):
 
