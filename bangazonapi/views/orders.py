@@ -33,10 +33,12 @@ class Orders(ViewSet):
             Response -- JSON serialized Order instance
         """
         new_order = Order()
+
         # uncomment this line when AUTH is ready
-        new_order.customer_id = request.auth.user.id
+        new_order.customer_id = request.auth.user.customer.id
         # use this line UTNIL AUTH is ready
         # new_order.customer_id = request.data["customer_id"]
+        
         new_order.save()
 
         serializer = OrderSerializer(
