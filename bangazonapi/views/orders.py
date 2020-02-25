@@ -31,6 +31,7 @@ class OrderSerializer(serializers.HyperlinkedModelSerializer):
 class Orders(ViewSet):
     """Orders for Bangazon API"""
 
+
     # Handles POST
     def create(self, request):
         """Handle POST operations
@@ -59,6 +60,9 @@ class Orders(ViewSet):
     def retrieve(self, request, pk=None):
         """Handle GET requests for a single order.
 
+        Fetch call to get one order by order id:
+            http://localhost:8000/orders/${id}
+
         Returns:
             Response -- JSON serialized Order instance
         """
@@ -70,15 +74,39 @@ class Orders(ViewSet):
             return HttpResponseServerError(ex)
 
 
-    # handles GET all
+    # handles GET all, GET by CUSTOMER, and GET by OPEN ORDERS
     def list(self, request):
         """Handle GET requests to orders resource
+
+        Fetch call to get all orders in the database:
+            http://localhost:8000/orders
+
+        Fetch call to get all OPEN orders in the database:
+            http://localhost:8000/orders/?open=true
+
+        Fetch call to get all orders for the logged in customer:
+            http://localhost:8000/orders/?customer=true
+
+        Fetch call to get all OPEN orders for the logged in customer:
+            http://localhost:8000/orders/?customer=true&open=true
 
         Returns:
             Response -- JSON serialized list of orders
         """
         # list of order instances
         orders = Order.objects.all()
+        customer_id = request.auth.user.customer.id
+
+        # filter by the logged in customer
+        is_one_customer = self.request.query_params.get('customer', False)
+        if is_one_customer == 'true':
+            orders = orders.filter(customer__id=customer_id)
+
+        # filter by open orders
+        is_open = self.request.query_params.get('open', False)
+        if is_open == 'true':
+            orders = orders.filter(payment_type__id=None)
+            
         # takes orders and converts to JSON
         serializer = OrderSerializer(
             orders,
