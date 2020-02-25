@@ -79,6 +79,18 @@ class Orders(ViewSet):
         """
         # list of order instances
         orders = Order.objects.all()
+        customer_id = request.auth.user.customer.id
+
+        # filter by the logged in customer
+        is_one_customer = self.request.query_params.get('customer', False)
+        if is_one_customer == 'true':
+            orders = orders.filter(customer__id=customer_id)
+
+        # filter by open orders
+        is_open = self.request.query_params.get('open', False)
+        if is_open == 'true':
+            orders = orders.filter(payment_type__id=None)
+            
         # takes orders and converts to JSON
         serializer = OrderSerializer(
             orders,
