@@ -2,6 +2,8 @@ from .customers import Customer
 from safedelete.models import SafeDeleteModel
 from safedelete.models import SOFT_DELETE
 from django.db import models
+from creditcards.models import CardExpiryField
+
 
 class PaymentType(SafeDeleteModel):
     '''
@@ -12,7 +14,7 @@ class PaymentType(SafeDeleteModel):
 
     merchant_name = models.CharField(max_length=25)
     account_number = models.CharField(max_length=25)
-    expiration_date = models.DateTimeField(auto_now=False, auto_now_add=True)
+    expiration_date = CardExpiryField(('expiration date'))
     customer = models.ForeignKey(Customer, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
 
