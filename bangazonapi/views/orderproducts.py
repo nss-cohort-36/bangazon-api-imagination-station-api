@@ -13,6 +13,7 @@ from bangazonapi.models import OrderProduct
 from .products import ProductsSerializer
 from .orders import OrderSerializer
 
+
 class OrderProductSerializer(serializers.HyperlinkedModelSerializer):
     """JSON serializer for order products
 
@@ -90,6 +91,11 @@ class OrderProducts(ViewSet):
             Response -- JSON serialized list of order products
         """
         order_products = OrderProduct.objects.all()
+
+        order_id = self.request.query_params.get('order', False)
+        if order_id == 'true':
+            order_products = order_products.filter(order__id=order_id)
+
         serializer = OrderProductSerializer(
             order_products, many=True, context={'request': request})
         return Response(serializer.data)
