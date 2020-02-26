@@ -11,7 +11,7 @@ class OrderProduct(models.Model):
         Author: Michelle Johnson
     """
 
-    order = models.ForeignKey(Order, on_delete=models.DO_NOTHING)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
 
     class Meta:
