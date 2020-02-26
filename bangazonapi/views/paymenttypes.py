@@ -81,8 +81,9 @@ class PaymentTypes(ViewSet):
 
         Author: Lauren Riddle
         '''
+        user = request.auth.user.customer.id
         # list payment types
-        types = PaymentType.objects.all()
+        types = PaymentType.objects.filter(customer_id=user)
 
         # take repsonse and covert to JSON
         serializer = PaymentTypeSerializer(types, many=True, context={'request': request})
