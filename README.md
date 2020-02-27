@@ -4,8 +4,8 @@
 
 - Create your OSX virtual environment in Terminal:
 
-  - `python -m venv workforceenv`
-  - `source ./workforceenv/bin/activate`
+  - `python -m venv bangazonenv`
+  - `source ./bangazonenv/bin/activate`
 
 - Or create your Windows virtual environment in Command Line:
 
@@ -34,3 +34,6 @@
 - Fire up your dev server and get to work!
 
   - `python manage.py runserver`
+
+- This API is dependent on the front-end client. You can find it here:
+https://github.com/nss-cohort-36/bangazon-client-imagination-station-react
