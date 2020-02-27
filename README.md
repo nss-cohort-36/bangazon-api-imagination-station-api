@@ -9,8 +9,8 @@
 
 - Or create your Windows virtual environment in Command Line:
 
-  - `python -m venv workforceenv`
-  - `source ./workforceenv/Scripts/activate`
+  - `python -m venv bangazonenv`
+  - `source ./bangazonenv/Scripts/activate`
 
 - Install the app's dependencies:
 
