@@ -4,6 +4,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
+from rest_framework.decorators import action
 from bangazonapi.models import Product
 from .customers import CustomersSerializer
 
@@ -30,6 +31,18 @@ class ProductsSerializer(serializers.HyperlinkedModelSerializer):
 
 class Products(ViewSet):
     """products for bangazon"""
+
+    # Custom action to get the number of products sold for specific product
+    @action(methods=['get'], detail=False)
+    def num_sold(self, request, product_id):
+        # SQL query here somehow. WHERE op.product_id = 4 will have 4 replaced with product_id
+        # SELECT COUNT() as "Number Sold"
+        # FROM bangazonapi_orderproduct op
+        # JOIN bangazonapi_order o
+        # ON op.order_id = o.id
+        # WHERE op.product_id = 4
+        # AND o.payment_type_id is not NULL
+        pass
 
     def create(self, request):
         """Handle POST operations
