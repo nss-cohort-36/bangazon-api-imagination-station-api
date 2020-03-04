@@ -11,10 +11,12 @@ class Customer(models.Model):
     """
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
+    address = models.CharField(max_length=100, null=True)
+    city = models.CharField(max_length=50, null=True)
+    zipcode = models.CharField(max_length=7, null=True)
+    phone = models.CharField(max_length=14, null=True)
 
     class Meta:
-        ordering = ("-created_at",)
         verbose_name = ("customer")
         verbose_name_plural = ("customers")
 

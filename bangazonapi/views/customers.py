@@ -39,7 +39,7 @@ class CustomersSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         depth = 2
-        fields = ('id', 'user',)
+        fields = ('id', 'user', 'address', 'city', 'phone', 'zipcode')
 
 class Users(ViewSet):
 
@@ -72,3 +72,19 @@ class Customers(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+
+    def list(self, request):
+        """Handle GET requests to customers resource
+        Returns:
+            Response -- JSON serialized list of customers
+        """      
+        customers = Customer.objects.filter(id = request.auth.user.customer.id)
+
+        customer = self.request.query_params.get('customer', None)
+
+        if customer is not None:
+            customers = customers.filter(id=customer)
+
+        serializer = CustomersSerializer(customers, many = True, context={'request': request})
+
+        return Response(serializer.data)
