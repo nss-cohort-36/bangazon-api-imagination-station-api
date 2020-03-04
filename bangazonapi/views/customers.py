@@ -74,7 +74,10 @@ class Customers(ViewSet):
             return HttpResponseServerError(ex)
 
     def update(self, request, pk=None):
-        """Handle PUT requests for a customer
+        """
+        Author: Lauren Riddle
+        
+        Handle PUT requests for a customer
 
         Returns:
             Response -- Empty body with 204 status code
