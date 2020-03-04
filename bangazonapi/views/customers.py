@@ -72,3 +72,20 @@ class Customers(ViewSet):
             return Response(serializer.data)
         except Exception as ex:
             return HttpResponseServerError(ex)
+
+    def update(self, request, pk=None):
+        """Handle PUT requests for a customer
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        customer = Customer.objects.get(pk=pk)
+        customer.address = request.data["address"]
+        customer.city = request.data["city"]
+        customer.zipcode = request.data["zipcode"]
+        customer.phone = request.data["phone"]
+
+
+        customer.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
