@@ -39,7 +39,7 @@ class CustomersSerializer(serializers.HyperlinkedModelSerializer):
             lookup_field='id'
         )
         depth = 2
-        fields = ('id', 'user',)
+        fields = ('id', 'user', 'address', 'city', 'phone', 'zipcode')
 
 class Users(ViewSet):
 
@@ -87,8 +87,12 @@ class Customers(ViewSet):
         customer.city = request.data["city"]
         customer.zipcode = request.data["zipcode"]
         customer.phone = request.data["phone"]
+        # accesses the nested users last name 
+        customer.user.last_name = request.data["last_name"]
 
 
         customer.save()
+        # Saves the last name to the user table
+        customer.user.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
