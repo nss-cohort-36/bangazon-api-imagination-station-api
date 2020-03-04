@@ -33,6 +33,7 @@ class Products(ViewSet):
     """products for bangazon"""
 
     # Custom action to get the number of products sold for specific product
+    # http://localhost:8000/products/num_sold/product_id
     @action(methods=['get'], detail=False)
     def num_sold(self, request, product_id):
         # SQL query here somehow. WHERE op.product_id = 4 will have 4 replaced with product_id
