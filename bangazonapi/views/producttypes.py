@@ -19,7 +19,9 @@ class ProductTypesSerializer(serializers.HyperlinkedModelSerializer):
             view_name='product_type',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'name',)
+
+        # products referst to the related_name attribute in products.py
+        fields = ('id', 'url', 'name', 'products')
         depth = 2
 
 
