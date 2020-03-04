@@ -88,3 +88,28 @@ class Customers(ViewSet):
         serializer = CustomersSerializer(customers, many = True, context={'request': request})
 
         return Response(serializer.data)
+
+    def update(self, request):
+        """
+        Author: Lauren Riddle
+        
+        Handle PUT requests for a customer
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+
+        customer = Customer.objects.get(pk=pk)
+        customer.address = request.data["address"]
+        customer.city = request.data["city"]
+        customer.zipcode = request.data["zipcode"]
+        customer.phone = request.data["phone"]
+        # accesses the nested users last name 
+        customer.user.last_name = request.data["last_name"]
+
+
+        customer.save()
+        # Saves the last name to the user table
+        customer.user.save()
+
+        return Response({}, status=status.HTTP_204_NO_CONTENT)
