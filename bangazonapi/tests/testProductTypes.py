@@ -1,13 +1,23 @@
-import json
 from rest_framework import status
 from django.test import TestCase
 from django.urls import reverse
 from bangazonapi.models.producttypes import ProductType
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+
+
 
 print("test file loaded------------------------")
 
 
 class TestProductTypes(TestCase):
+    # used to get user auth to work
+    def setUp(self):
+        self.username = 'testuser'
+        self.password = 'foobar'
+        self.user = User.objects.create_user(username=self.username, password=self.password)
+        self.token = Token.objects.create(user=self.user)
+
     def test_post_product_type(self):
         # define a product type to be sent to the API
         new_product_type = {
@@ -16,7 +26,7 @@ class TestProductTypes(TestCase):
         
         #  Use the client to send the request and store the response
         response = self.client.post(
-            reverse('producttype-list'), new_product_type
+            reverse('producttype-list'), new_product_type, HTTP_AUTHORIZATION='Token ' + str(self.token)
           )
 
         # Getting 200 back because we have a success url
@@ -34,7 +44,7 @@ class TestProductTypes(TestCase):
         )
 
         # Now we can grab all the product types (meaning the one we just created) from the db
-        response = self.client.get(reverse('producttype-list'))
+        response = self.client.get(reverse('producttype-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
 
         # Check that the response is 200 OK.
         # This is checking for the GET request result, not the POST. We already checked that POST works in the previous test!
