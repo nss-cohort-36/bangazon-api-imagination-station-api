@@ -28,29 +28,28 @@ class TestProductTypes(TestCase):
         # And see if it's the one we just added by checking one of the properties. Here, name.
         self.assertEqual(ProductType.objects.get().name, 'Sporting Goods')
 
-    # def test_get_parkareas(self):
-    #     new_area = ParkArea.objects.create(
-    #       name="Coaster Land",
-    #       theme="coasters, duh",
-    #     )
+    def test_get_product_type(self):
+        new_product_type = ProductType.objects.create(
+          name="Sporting Goods"
+        )
 
-    #     # Now we can grab all the area (meaning the one we just created) from the db
-    #     response = self.client.get(reverse('parkarea-list'))
+        # Now we can grab all the product types (meaning the one we just created) from the db
+        response = self.client.get(reverse('producttype-list'))
 
-    #     # Check that the response is 200 OK.
-    #     # This is checking for the GET request result, not the POST. We already checked that POST works in the previous test!
-    #     self.assertEqual(response.status_code, 200)
+        # Check that the response is 200 OK.
+        # This is checking for the GET request result, not the POST. We already checked that POST works in the previous test!
+        self.assertEqual(response.status_code, 200)
 
-    #     # response.data is the python serialised data used to render the JSON, while response.content is the JSON itself.
-    #     # Are we responding with the data we asked for? There's just one parkarea in our dummy db, so it should contain a list with one instance in it
-    #     self.assertEqual(len(response.data), 1)
+        # response.data is the python serialised data used to render the JSON, while response.content is the JSON itself.
+        # Are we responding with the data we asked for? There's just one product type in our dummy db, so it should contain a list with one instance in it
+        self.assertEqual(len(response.data), 1)
 
-    #     # test the contents of the data before it's serialized into JSON
-    #     self.assertEqual(response.data[0]["name"], "Coaster Land")
+        # test the contents of the data before it's serialized into JSON
+        self.assertEqual(response.data[0]["name"], "Sporting Goods")
 
-    #     # Finally, test the actual rendered content as the client would receive it.
-    #     # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
-    #     self.assertIn(new_area.name.encode(), response.content)
+        # Finally, test the actual rendered content as the client would receive it.
+        # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
+        self.assertIn(new_product_type.name.encode(), response.content)
 
 
 if __name__ == '__main__':
