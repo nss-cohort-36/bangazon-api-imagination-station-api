@@ -21,8 +21,10 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now=False, auto_now_add=True)
     customer = models.ForeignKey(
         Customer, on_delete=models.DO_NOTHING, related_name="customers")
+
+    # The related_name attribute specifies the name of the reverse relation
     product_type = models.ForeignKey(
-        ProductType, on_delete=models.DO_NOTHING, related_name="product_types")
+        ProductType, on_delete=models.DO_NOTHING, related_name="products")
 
     class Meta:
         ordering = ("-created_at",)
