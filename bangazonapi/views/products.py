@@ -45,9 +45,13 @@ class Products(ViewSet):
             Ryan Crowley
 
         Returns:
+            Response - JSON object with "total" as the key and an integer as the value
         """
+
+        # Get the product ID from the query params
         product_id = int(self.request.query_params.get('product_id'))
 
+        # query the database
         with connection.cursor() as cursor:
             cursor.execute(
                 '''SELECT COUNT() as "Number Sold"
@@ -59,8 +63,10 @@ class Products(ViewSet):
             )
 
             row = cursor.fetchone()
+            # row[0] will contain the integer representing total sold for this product.
             total = {"total": row[0]}
 
+            # Return a JSON response
             return Response(total)
 
 
