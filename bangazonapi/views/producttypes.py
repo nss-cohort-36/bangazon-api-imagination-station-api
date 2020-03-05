@@ -14,6 +14,7 @@ class ProductTypesSerializer(serializers.HyperlinkedModelSerializer):
     Arguments:
         serializers
     """
+    # this allows the id of the products to be used in product types
     products = ProductsSerializer(many=True)
     class Meta:
         model = ProductType
