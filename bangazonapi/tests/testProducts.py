@@ -47,28 +47,35 @@ class TestProducts(TestCase):
         # And see if it's the one we just added by checking one of the properties. Here, name.
         self.assertEqual(Product.objects.get().name, 'Hot Dog')
 
-    # def test_get_product_type(self):
-    #     new_product_type = ProductType.objects.create(
-    #       name="Sporting Goods"
-    #     )
+    def test_get_product(self):
+        new_product = Product.objects.create(
+        name = "Hot Dog",
+        price = 3.00,
+        description = "Real good, fresh and not expired.",
+        quantity = 11,
+        location = "Franklin",
+        image_path = "./none_pic.jpg",
+        customer_id = self.customer.id,
+        product_type_id = self.product_type.id
+        )
 
-    #     # Now we can grab all the product types (meaning the one we just created) from the db
-    #     response = self.client.get(reverse('producttype-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
+        # Now we can grab all the products (meaning the one we just created) from the db
+        response = self.client.get(reverse('product-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
 
-    #     # Check that the response is 200 OK.
-    #     # This is checking for the GET request result, not the POST. We already checked that POST works in the previous test!
-    #     self.assertEqual(response.status_code, 200)
+        # Check that the response is 200 OK.
+        # This is checking for the GET request result, not the POST. We already checked that POST works in the previous test!
+        self.assertEqual(response.status_code, 200)
 
-    #     # response.data is the python serialised data used to render the JSON, while response.content is the JSON itself.
-    #     # Are we responding with the data we asked for? There's just one product type in our dummy db, so it should contain a list with one instance in it
-    #     self.assertEqual(len(response.data), 1)
+        # response.data is the python serialised data used to render the JSON, while response.content is the JSON itself.
+        # Are we responding with the data we asked for? There's just one product in our dummy db, so it should contain a list with one instance in it
+        self.assertEqual(len(response.data), 1)
 
-    #     # test the contents of the data before it's serialized into JSON
-    #     self.assertEqual(response.data[0]["name"], "Sporting Goods")
+        # test the contents of the data before it's serialized into JSON
+        self.assertEqual(response.data[0]["name"], "Hot Dog")
 
-    #     # Finally, test the actual rendered content as the client would receive it.
-    #     # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
-    #     self.assertIn(new_product_type.name.encode(), response.content)
+        # Finally, test the actual rendered content as the client would receive it.
+        # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
+        self.assertIn(new_product.name.encode(), response.content)
 
 
 if __name__ == '__main__':
