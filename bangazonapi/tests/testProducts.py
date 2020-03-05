@@ -1,7 +1,7 @@
 from rest_framework import status
 from django.test import TestCase
 from django.urls import reverse
-from bangazonapi.models import Product, Customer, ProductType
+from bangazonapi.models import Product, Customer, ProductType, Order, PaymentType
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
@@ -19,6 +19,10 @@ class TestProducts(TestCase):
         self.token = Token.objects.create(user=self.user)
         self.customer = Customer.objects.create(user_id=1)
         self.product_type = ProductType.objects.create(name="type for testing")
+        self.payment_type = PaymentType.objects.create(merchant_name="Visa", account_number="1234567", created_at="2020-03-04 20:41:57.004509", customer_id=self.customer.id, expiration_date="3020-12-31")
+        self.order1 = Order.objects.create(created_at="2020-02-24 15:32:15.551752", customer_id=self.customer.id, payment_type_id=self.payment_type.id)
+        self.order2 = Order.objects.create(created_at="2020-02-25 15:32:15.551752", customer_id=self.customer.id, payment_type_id=self.payment_type.id)
+        self.order3 = Order.objects.create(created_at="2020-02-25 15:32:15.551752", customer_id=self.customer.id)
 
     def test_post_product(self):
         # define a product to be sent to the API
@@ -49,14 +53,14 @@ class TestProducts(TestCase):
 
     def test_get_product(self):
         new_product = Product.objects.create(
-        name = "Hot Dog",
-        price = 3.00,
-        description = "Real good, fresh and not expired.",
-        quantity = 11,
-        location = "Franklin",
-        image_path = "./none_pic.jpg",
-        customer_id = self.customer.id,
-        product_type_id = self.product_type.id
+            name = "Hot Dog",
+            price = 3.00,
+            description = "Real good, fresh and not expired.",
+            quantity = 11,
+            location = "Franklin",
+            image_path = "./none_pic.jpg",
+            customer_id = self.customer.id,
+            product_type_id = self.product_type.id
         )
 
         # Now we can grab all the products (meaning the one we just created) from the db
