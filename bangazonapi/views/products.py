@@ -1,5 +1,6 @@
 """products for bangazon"""
 from django.http import HttpResponseServerError
+from django.db import connection
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
@@ -45,25 +46,23 @@ class Products(ViewSet):
 
         Returns:
         """
+        product_id = int(self.request.query_params.get('product_id'))
 
+        with connection.cursor() as cursor:
+            cursor.execute(
+                '''SELECT COUNT() as "Number Sold"
+                    FROM bangazonapi_orderproduct op
+                    JOIN bangazonapi_order o
+                    ON op.order_id = o.id
+                    WHERE op.product_id = %s
+                    AND o.payment_type_id is not NULL''', [product_id]
+            )
 
-        product_id = self.request.query_params.get('product_id', False)
+            row = cursor.fetchone()
+            total = {"total": row[0]}
 
-        if product_id:
-            print("Product id: ", product_id)
-        else:
-            print("No product ID")
-        # total_sold = Product.objects.raw(
-        #     '''SELECT COUNT() as "Number Sold"
-        #         FROM bangazonapi_orderproduct op
-        #         JOIN bangazonapi_order o
-        #         ON op.order_id = o.id
-        #         WHERE op.product_id = ?
-        #         AND o.payment_type_id is not NULL''', product_id
-        # )
+            return Response(total)
 
-        # print("Total Sold: ", total_sold)
-        # print("Type of total sold: ", type(total_sold))
 
     def create(self, request):
         """Handle POST operations
