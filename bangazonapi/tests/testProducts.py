@@ -4,6 +4,7 @@ from django.urls import reverse
 from bangazonapi.models import Product, Customer, ProductType, Order, PaymentType
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
+from unittest import skip
 
 
 
@@ -80,6 +81,17 @@ class TestProducts(TestCase):
         # Finally, test the actual rendered content as the client would receive it.
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_product.name.encode(), response.content)
+
+    @skip("still working on this.")
+    def test_num_sold(self):
+        #  Create a new product.
+
+        # Create an order product connecting the product to order 1 (sold)
+
+        # Create an order product connecting the product to order 2 (sold)
+
+        # Create an order product connecting the product to order 3 (not sold)
+        pass
 
 
 if __name__ == '__main__':
