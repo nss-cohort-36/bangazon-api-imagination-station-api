@@ -96,7 +96,7 @@ class Customers(ViewSet):
         return Response(serializer.data)
 
     #Custom action to update user profile
-    @action(methods=['put'], detail=False)
+    @action(methods=['put'], detail=False, url_name='update_profile')
     def profile_update(self, request):
         """
         Author: Lauren Riddle & Trey Suiter
