@@ -33,17 +33,37 @@ class Products(ViewSet):
     """products for bangazon"""
 
     # Custom action to get the number of products sold for specific product
-    # http://localhost:8000/products/num_sold/product_id
     @action(methods=['get'], detail=False)
-    def num_sold(self, request, product_id):
-        # SQL query here somehow. WHERE op.product_id = 4 will have 4 replaced with product_id
-        # SELECT COUNT() as "Number Sold"
-        # FROM bangazonapi_orderproduct op
-        # JOIN bangazonapi_order o
-        # ON op.order_id = o.id
-        # WHERE op.product_id = 4
-        # AND o.payment_type_id is not NULL
-        pass
+    def num_sold(self, request):
+        """Handle requests total sold of a product.
+
+        Fetch call to get number sold for a product:
+            http://localhost:8000/products/num_sold?product_id=PRODUCT_ID_GOES_HERE
+
+        Author:
+            Ryan Crowley
+
+        Returns:
+        """
+
+
+        product_id = self.request.query_params.get('product_id', False)
+
+        if product_id:
+            print("Product id: ", product_id)
+        else:
+            print("No product ID")
+        # total_sold = Product.objects.raw(
+        #     '''SELECT COUNT() as "Number Sold"
+        #         FROM bangazonapi_orderproduct op
+        #         JOIN bangazonapi_order o
+        #         ON op.order_id = o.id
+        #         WHERE op.product_id = ?
+        #         AND o.payment_type_id is not NULL''', product_id
+        # )
+
+        # print("Total Sold: ", total_sold)
+        # print("Type of total sold: ", type(total_sold))
 
     def create(self, request):
         """Handle POST operations
