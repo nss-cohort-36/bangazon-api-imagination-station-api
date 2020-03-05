@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from bangazonapi.models import ProductType
+from .products import ProductsSerializer
 
 
 class ProductTypesSerializer(serializers.HyperlinkedModelSerializer):
@@ -13,13 +14,17 @@ class ProductTypesSerializer(serializers.HyperlinkedModelSerializer):
     Arguments:
         serializers
     """
+    # this allows the id of the products to be used in product types
+    products = ProductsSerializer(many=True)
     class Meta:
         model = ProductType
         url = serializers.HyperlinkedIdentityField(
             view_name='product_type',
             lookup_field='id'
         )
-        fields = ('id', 'url', 'name',)
+
+        # products referst to the related_name attribute in products.py
+        fields = ('id', 'url', 'name', 'products')
         depth = 2
 
 
