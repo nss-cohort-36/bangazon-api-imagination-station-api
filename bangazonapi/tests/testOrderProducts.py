@@ -84,7 +84,7 @@ class TestOrderProducts(TestCase):
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_order_product.product.name.encode(), response.content)
 
-        print("HELP", new_order_product)
+        print("HELP", )
 
 
 if __name__ == '__main__':
