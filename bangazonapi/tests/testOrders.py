@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from unittest import skip
 
-print("test file loaded------------------------")
+print("test orders file loaded-----------------")
 
 
 class TestOrders(TestCase):
