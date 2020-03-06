@@ -22,7 +22,6 @@ class TestOrders(TestCase):
             expiration_date='2020-09-30',
             customer_id=self.customer.id)
 
-    @skip
     def test_post_order(self):
         # define an order to be sent to the API
         new_order = {
@@ -35,16 +34,10 @@ class TestOrders(TestCase):
             reverse('order-list'), new_order, HTTP_AUTHORIZATION='Token ' + str(self.token)
           )
 
-        # Getting 200 back because we have a success url
         self.assertEqual(response.status_code, 200)
-
-        # Query the table to see if there's one Product Type instance in there. Since we are testing a POST request, we don't need to test whether an HTTP GET works. So, we just use the ORM to see if the thing we saved is in the db.
         self.assertEqual(Order.objects.count(), 1)
-
-        # And see if it's the one we just added by checking one of the properties. Here, name.
         self.assertEqual(Order.objects.get().customer.id, 1)
 
-    @skip
     def test_get_order(self):
         new_order = Order.objects.create(
             customer_id=self.customer.id,
@@ -57,8 +50,24 @@ class TestOrders(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data), 1)
         self.assertEqual(response.data[0]["customer"]["id"], 1)
-        self.assertIn(new_order.customer.encode(), response.content)
 
+    def test_delete_order(self):
+        """TEST for destroy method on order view"""
+        new_order = Order.objects.create(
+            customer_id=self.customer.id,
+            payment_type_id=self.payment_type.id
+        )
+
+        # Delete a product. As shown in our post and get tests above, new_product
+        # will be the only product in the database, and will have an id of 1
+        response = self.client.delete(
+            reverse('order-detail', kwargs={'pk': 1}), HTTP_AUTHORIZATION='Token ' + str(self.token))
+
+        self.assertEqual(response.status_code, 204)
+
+        # Confirm that the product is NOT in the database, which means no products will be
+        response = self.client.get(reverse('order-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
+        self.assertEqual(len(response.data), 0)
 
 if __name__ == '__main__':
     unittest.main()
