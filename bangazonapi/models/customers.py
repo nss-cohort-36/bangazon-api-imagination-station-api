@@ -11,11 +11,13 @@ class Customer(models.Model):
     city = models.CharField(max_length=50, null=True)
     zipcode = models.CharField(max_length=7, null=True)
     phone = models.CharField(max_length=14, null=True)
+
     class Meta:
         verbose_name = ("customer")
         verbose_name_plural = ("customers")
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
+        
 #!This is not needed due to using ORM
 # These receiver hooks allow you to continue to
 # work with the `User` class in your Python code.

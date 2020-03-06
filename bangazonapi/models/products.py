@@ -1,9 +1,10 @@
 from django.db import models
 from .customers import Customer
 from .producttypes import ProductType
+from safedelete.models import SafeDeleteModel
+from safedelete.models import SOFT_DELETE
 
-
-class Product(models.Model):
+class Product(SafeDeleteModel):
     """
     This represents a product object
 
@@ -11,7 +12,7 @@ class Product(models.Model):
 
     Author: Ken Boyd
     """
-
+    _safedelete_policy = SOFT_DELETE
     name = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=7, decimal_places=2)
     description = models.CharField(max_length=255)
