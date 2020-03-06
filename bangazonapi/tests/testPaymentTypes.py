@@ -73,6 +73,30 @@ class TestPaymentTypes(TestCase):
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_payment_type.merchant_name.encode(), response.content)
 
-    if __name__ == '__main__':
-        unittest.main()
+    def test_delete_payment_type(self):
+        # define a payment type to be POSTed to the DB
+        new_payment_type = PaymentType.objects.create(
+            merchant_name= "Tacobell Discover Card",
+            account_number= "789",
+            expiration_date= "11/2020",
+            customer_id=1
+        )
+         
+        # perform a delete on the object. Note: you have to reverse to paymenttype-detail sinces you are only targeting one object and not the whole list
+        response = self.client.delete(reverse('paymenttype-detail', kwargs={'pk': 1}), HTTP_AUTHORIZATION='Token ' + str(self.token))
+ 
+        # Check that the response is 204 OK.
+        self.assertEqual(response.status_code, 204)
+
+        # Now we can grab all the payment types from the db. In this case there should be 0
+        response = self.client.get(reverse('paymenttype-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
+
+        # Check that the response is 200 OK.
+        self.assertEqual(response.status_code, 200)
+
+        # test that the length of the response is 0, which means the delete was successful
+        self.assertEqual(len(response.data), 0)
+
+if __name__ == '__main__':
+    unittest.main()
 
