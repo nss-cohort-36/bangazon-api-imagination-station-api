@@ -1,3 +1,4 @@
+import json
 from rest_framework import status
 from django.test import TestCase
 from django.urls import reverse
@@ -168,6 +169,54 @@ class TestProducts(TestCase):
         response = self.client.get(reverse('product-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
         self.assertEqual(len(response.data), 0)
 
+
+    def test_edit_product(self):
+        """TEST for update method on products view"""
+
+        # Create a product that you will edit
+        new_product = Product.objects.create(
+            name = "Hot Dog",
+            price = 3.00,
+            description = "Real good, fresh and not expired.",
+            quantity = 11,
+            location = "Franklin",
+            image_path = "./none_pic.jpg",
+            customer_id = self.customer.id,
+            product_type_id = self.product_type.id
+        )
+
+        # Create new updated object. Change the name to "Corn Dawg"
+        updated_product = {
+              "name": "Corn Dawg",
+              "price": new_product.price,
+              "description": new_product.description,
+              "quantity": new_product.quantity,
+              "location": new_product.location,
+              "image_path": new_product.image_path,
+              "customer_id": new_product.customer_id,
+              "product_type_id": new_product.product_type_id
+            }
+
+
+        # Update new_product
+        response = self.client.put(
+            reverse('product-detail', kwargs={'pk': 1}), 
+            updated_product,
+            content_type='application/json',
+            HTTP_AUTHORIZATION='Token ' + str(self.token)
+        )
+
+        # Assert that the put returns the expected 204 status
+        self.assertEqual(response.status_code, 204)
+
+
+        # Get the product again, it should now be the updated product.
+        response = self.client.get(
+            reverse('product-detail', kwargs={'pk': 1}), HTTP_AUTHORIZATION='Token ' + str(self.token)
+        )
+
+        # Assert that the product name is now "Corn Dawg"
+        self.assertEqual(response.data["name"], "Corn Dawg")
 
     def test_num_sold(self):
         #  Create a new product.
