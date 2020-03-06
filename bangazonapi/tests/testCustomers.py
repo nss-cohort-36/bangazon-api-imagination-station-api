@@ -18,10 +18,7 @@ class TestCustomers(TestCase):
        
         self.user = User.objects.create_user(
             username = self.username, 
-            password = self.password,
-            first_name = "default_first_name",
-            last_name ="default_last_name",
-            email = "default@email.com",
+            password = self.password
         )
         self.customer = Customer.objects.create(
             user_id=1
@@ -32,23 +29,23 @@ class TestCustomers(TestCase):
     # @skip
     def test_put_customer_update(self):
         # define a customer to be sent to the API
-
-        updated_customer_info = {
-            "first_name": "Foo",
-            "last_name": "Bar",
-            "address": "123 Foobar St.",
-            "city": "New Foo City",
+        new_customer_info = {
+            "first_name": "Update Jim",
+            "last_name": "Flippy update",
+            "address": "123 Updated St",
+            "city": "update City",
             "zipcode": "12345",
-            "phone": "615-123-4567"
+            "phone": "123-456-7890"
         }
-
+        
+        
         #  Use the client to send the request and store the response
         response = self.client.put(
-            reverse('customer-profile_update'), updated_customer_info, HTTP_AUTHORIZATION='Token ' + str(self.token)
+        '/customers/profile_update', new_customer_info, content_type='application/json', HTTP_AUTHORIZATION='Token ' + str(self.token)
           )
 
         # Getting 200 back because we have a success url
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 204)
 
         # Query the table to see if there's one customer instance in there. Since we are testing a PUT request, we don't need to test whether an HTTP GET works. So, we just use the ORM to see if the thing we saved is in the db.
         self.assertEqual(Customer.objects.count(), 1)
