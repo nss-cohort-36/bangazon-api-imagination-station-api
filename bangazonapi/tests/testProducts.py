@@ -82,6 +82,34 @@ class TestProducts(TestCase):
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_product.name.encode(), response.content)
 
+    def test_delete_product(self):
+        # Create a product
+        new_product = Product.objects.create(
+            name = "Hot Dog",
+            price = 3.00,
+            description = "Real good, fresh and not expired.",
+            quantity = 11,
+            location = "Franklin",
+            image_path = "./none_pic.jpg",
+            customer_id = self.customer.id,
+            product_type_id = self.product_type.id
+        )
+
+
+        # Delete a product. As shown in our post and get tests above, new_product
+        # will be the only product in the database, and will have an id of 1
+        response = self.client.delete(
+            reverse('product-detail', kwargs={'pk': 1}), HTTP_AUTHORIZATION='Token ' + str(self.token))
+
+        self.assertEqual(response.status_code, 204)
+
+        # Confirm that the product is NOT in the database, which means no products will be
+        # response = self.client.get(reverse('product-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
+        # self.assertEqual(len(response.data), 0)
+        response = self.client.get(reverse('product-list'), HTTP_AUTHORIZATION='Token ' + str(self.token))
+        self.assertEqual(len(response.data), 0)
+
+
     @skip("still working on this.")
     def test_num_sold(self):
         #  Create a new product.
