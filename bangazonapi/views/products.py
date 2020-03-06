@@ -1,9 +1,11 @@
 """products for bangazon"""
 from django.http import HttpResponseServerError
+from django.db import connection
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
+from rest_framework.decorators import action
 from bangazonapi.models import Product
 from .customers import CustomersSerializer
 
@@ -30,6 +32,43 @@ class ProductsSerializer(serializers.HyperlinkedModelSerializer):
 
 class Products(ViewSet):
     """products for bangazon"""
+
+    # Custom action to get the number of products sold for specific product
+    @action(methods=['get'], detail=False, url_name="num_sold")
+    def num_sold(self, request):
+        """Handle requests total sold of a product.
+
+        Fetch call to get number sold for a product:
+            http://localhost:8000/products/num_sold?product_id=PRODUCT_ID_GOES_HERE
+
+        Author:
+            Ryan Crowley
+
+        Returns:
+            Response - JSON object with "total" as the key and an integer as the value
+        """
+
+        # Get the product ID from the query params
+        product_id = int(self.request.query_params.get('product_id'))
+
+        # query the database
+        with connection.cursor() as cursor:
+            cursor.execute(
+                '''SELECT COUNT() as "Number Sold"
+                    FROM bangazonapi_orderproduct op
+                    JOIN bangazonapi_order o
+                    ON op.order_id = o.id
+                    WHERE op.product_id = %s
+                    AND o.payment_type_id is not NULL''', [product_id]
+            )
+
+            row = cursor.fetchone()
+            # row[0] will contain the integer representing total sold for this product.
+            total = {"total_sold": row[0]}
+
+            # Return a JSON response
+            return Response(total)
+
 
     def create(self, request):
         """Handle POST operations
