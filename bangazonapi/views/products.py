@@ -34,7 +34,7 @@ class Products(ViewSet):
     """products for bangazon"""
 
     # Custom action to get the number of products sold for specific product
-    @action(methods=['get'], detail=False)
+    @action(methods=['get'], detail=False, url_name="num_sold")
     def num_sold(self, request):
         """Handle requests total sold of a product.
 
@@ -64,7 +64,7 @@ class Products(ViewSet):
 
             row = cursor.fetchone()
             # row[0] will contain the integer representing total sold for this product.
-            total = {"total": row[0]}
+            total = {"total_sold": row[0]}
 
             # Return a JSON response
             return Response(total)
