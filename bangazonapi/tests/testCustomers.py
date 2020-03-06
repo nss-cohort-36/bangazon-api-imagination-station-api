@@ -14,9 +14,23 @@ class TestCustomers(TestCase):
     def setUp(self):
         self.username = 'testuser'
         self.password = 'foobar'
+        self.first_name = 'john'
+        self.last_name = 'smith'
+        self.address = '1 default street'
+        self.city = 'default city'
+        self.zipcode = '00000'
+        self.phone = '111-111-1111'
+        # self.user_id = 1
         self.user = User.objects.create_user(
-            username=self.username, password=self.password)
-        self.customer = Customer.objects.create({})
+            username=self.username, password=self.password, first_name=self.first_name, 
+            last_name=self.last_name)
+        self.customer = Customer.objects.create(
+            user_id=self.user.id,
+            address=self.address,
+            city=self.city,
+            zipcode=self.zipcode,
+            phone=self.phone
+        )
         self.token = Token.objects.create(user=self.user)
 
     # fetch customer from db to edit
@@ -29,8 +43,7 @@ class TestCustomers(TestCase):
             "address": "123 Foobar St.",
             "city": "New Foo City",
             "zipcode": "12345",
-            "phone": "615-123-4567",
-            "user": self.user
+            "phone": "615-123-4567"
         }
 
         #  Use the client to send the request and store the response

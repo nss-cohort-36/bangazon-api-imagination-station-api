@@ -108,7 +108,6 @@ class Customers(ViewSet):
         """
 
         customer = Customer.objects.get(pk=request.auth.user.customer.id)
-        # customer.user.id = request.auth.user.customer.id
         customer.address = request.data["address"]
         customer.city = request.data["city"]
         customer.zipcode = request.data["zipcode"]
