@@ -35,7 +35,8 @@ class TestCustomers(TestCase):
             "address": "123 Updated St",
             "city": "update City",
             "zipcode": "12345",
-            "phone": "123-456-7890"
+            "phone": "123-456-7890",
+            "customer": 1
         }
         
         
@@ -51,7 +52,8 @@ class TestCustomers(TestCase):
         self.assertEqual(Customer.objects.count(), 1)
 
         # And see if it's the one we just added by checking one of the properties. Here, name.
-        self.assertEqual(Customer.objects.get().first_name, 'Foo')
+        self.assertEqual(User.objects.get().first_name, 'Update Jim')
+        self.assertEqual(Customer.objects.get().zipcode, '12345')
     @skip
     def test_get_user(self):
         new_customer = User.objects.create(

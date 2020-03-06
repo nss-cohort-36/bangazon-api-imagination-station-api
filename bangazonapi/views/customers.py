@@ -107,17 +107,21 @@ class Customers(ViewSet):
             Response -- Empty body with 204 status code
         """
 
+        
+        # accesses the nested users last name
+        
+
         customer = Customer.objects.get(pk=request.auth.user.customer.id)
         customer.address = request.data["address"]
         customer.city = request.data["city"]
         customer.zipcode = request.data["zipcode"]
         customer.phone = request.data["phone"]
-        # accesses the nested users last name
-        customer.user.last_name = request.data["last_name"]
-        customer.user.first_name = request.data["first_name"]
-
         customer.save()
-        customer.user.save()
+
+        user = User.objects.get(pk=customer.user_id)
+        user.last_name = request.data["last_name"]
+        user.first_name = request.data["first_name"]
+        user.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
