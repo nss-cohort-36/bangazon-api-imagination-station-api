@@ -197,7 +197,6 @@ class TestProducts(TestCase):
               "product_type_id": new_product.product_type_id
             }
 
-
         # Update new_product
         response = self.client.put(
             reverse('product-detail', kwargs={'pk': 1}), 
@@ -209,12 +208,11 @@ class TestProducts(TestCase):
         # Assert that the put returns the expected 204 status
         self.assertEqual(response.status_code, 204)
 
-
         # Get the product again, it should now be the updated product.
         response = self.client.get(
             reverse('product-detail', kwargs={'pk': 1}), HTTP_AUTHORIZATION='Token ' + str(self.token)
         )
-
+        
         # Assert that the product name is now "Corn Dawg"
         self.assertEqual(response.data["name"], "Corn Dawg")
 
