@@ -6,7 +6,11 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from unittest import skip
 
+"""Tests for the product and product detail endpoints.
 
+Author:
+    Ryan Crowley
+"""
 
 print("test file loaded------------------------")
 
@@ -25,7 +29,9 @@ class TestProducts(TestCase):
         self.order2 = Order.objects.create(created_at="2020-02-25 15:32:15.551752", customer_id=self.customer.id, payment_type_id=self.payment_type.id)
         self.order3 = Order.objects.create(created_at="2020-02-25 15:32:15.551752", customer_id=self.customer.id)
 
+
     def test_post_product(self):
+        """TEST for create method on products view"""
         # define a product to be sent to the API
         new_product = {
               "name": "Hot Dog",
@@ -52,7 +58,10 @@ class TestProducts(TestCase):
         # And see if it's the one we just added by checking one of the properties. Here, name.
         self.assertEqual(Product.objects.get().name, 'Hot Dog')
 
+
     def test_get_product(self):
+        """TEST for list method on products view"""
+
         new_product = Product.objects.create(
             name = "Hot Dog",
             price = 3.00,
@@ -82,7 +91,55 @@ class TestProducts(TestCase):
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_product.name.encode(), response.content)
 
+
+    def test_get_one_product(self):
+        """TEST for retrieve method on products view"""
+
+        # Create 2 products
+        product_one = Product.objects.create(
+            name = "Hot Dog",
+            price = 3.00,
+            description = "Real good, fresh and not expired.",
+            quantity = 11,
+            location = "Franklin",
+            image_path = "./none_pic.jpg",
+            customer_id = self.customer.id,
+            product_type_id = self.product_type.id
+        )
+
+        product_two = Product.objects.create(
+            name = "Cheesburger",
+            price = 5.00,
+            description = "Medium well!",
+            quantity = 9,
+            location = "Franklin",
+            image_path = "./none_pic.jpg",
+            customer_id = self.customer.id,
+            product_type_id = self.product_type.id
+        )
+
+        # Retrieve product 1
+        response = self.client.get(
+            reverse('product-detail', kwargs={'pk': 1}), HTTP_AUTHORIZATION='Token ' + str(self.token)
+        )
+
+        # Assert 200 response status and name == Hot Dog
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["name"], "Hot Dog")
+
+        # Retrieve product 2
+        response = self.client.get(
+            reverse('product-detail', kwargs={'pk': 2}), HTTP_AUTHORIZATION='Token ' + str(self.token)
+        )
+
+        # Assert 200 response status and name == Cheesburger
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data["name"], "Cheesburger")
+
+
     def test_delete_product(self):
+        """TEST for destroy method on products view"""
+
         # Create a product
         new_product = Product.objects.create(
             name = "Hot Dog",
