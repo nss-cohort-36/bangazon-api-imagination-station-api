@@ -15,30 +15,23 @@ class TestCustomers(TestCase):
 
         self.username = 'testuser'
         self.password = 'foobar'
-        self.first_name = 'john'
-        self.last_name = 'smith'
-        self.address = '1 default street'
-        self.city = 'default city'
-        self.zipcode = '00000'
-        self.phone = '111-111-1111'
-
+       
         self.user = User.objects.create_user(
-            username=self.username, password=self.password)
-
+            username = self.username, 
+            password = self.password,
+            first_name = "default_first_name",
+            last_name ="default_last_name",
+            email = "default@email.com",
+        )
         self.customer = Customer.objects.create(
-            user_id=self.user.id,
-            address=self.address,
-            city=self.city,
-            zipcode=self.zipcode,
-            phone=self.phone
+            user_id=1
         )
 
         self.token = Token.objects.create(user=self.user)
     
-    @skip
+    # @skip
     def test_put_customer_update(self):
         # define a customer to be sent to the API
-        print(self.customer.address, 'address before put')
 
         updated_customer_info = {
             "first_name": "Foo",
@@ -51,10 +44,8 @@ class TestCustomers(TestCase):
 
         #  Use the client to send the request and store the response
         response = self.client.put(
-            reverse('customer-update_profile'), updated_customer_info, HTTP_AUTHORIZATION='Token ' + str(self.token)
-        )
-
-        print(self.customer.address, 'address after put')
+            reverse('customer-profile_update'), updated_customer_info, HTTP_AUTHORIZATION='Token ' + str(self.token)
+          )
 
         # Getting 200 back because we have a success url
         self.assertEqual(response.status_code, 200)

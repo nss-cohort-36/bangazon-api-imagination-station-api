@@ -13,6 +13,7 @@ class TestAuth(TestCase):
         self.user = User.objects.create_user(username=self.username, password=self.password)
         # self.token = Token.objects.create(user=self.user)
 
+    @skip
     def test_login(self):
 
         user_to_login = {
