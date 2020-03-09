@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from bangazonapi.models import Customer
 from rest_framework.decorators import action
 
-#! This is a nested serialzer; PAY ATTENTION
+#! This is a nested serializer; PAY ATTENTION
 
 
 class UsersSerializer(serializers.HyperlinkedModelSerializer):
@@ -125,15 +125,3 @@ class Customers(ViewSet):
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-# def update(self, request, pk=None):
-#         """Handle PUT requests for a park area
-#         Returns:
-#             Response -- Empty body with 204 status code
-#         """
-#         itinerary_item = Itinerary.objects.get(pk=pk)
-#         itinerary_item.starttime = request.data["starttime"]
-#         itinerary_item.customer_id = request.auth.userid
-#         itinerary_item.attraction_id = request.data["attraction_id"]
-#         itinerary_item.save()
-
-#         return Response({}, status=status.HTTP_204_NO_CONTENT)
