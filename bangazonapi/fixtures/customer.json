@@ -1,0 +1,13 @@
+[
+    {
+        "model": "bangazonapi.customer",
+        "pk": 1,
+        "fields": {
+            "user": 1,
+            "address": null,
+            "city": null,
+            "zipcode": null,
+            "phone": null
+        }
+    }
+]
