@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from bangazonapi.models import Customer
 from rest_framework.decorators import action
 
-#! This is a nested serialzer; PAY ATTENTION
+#! This is a nested serializer; PAY ATTENTION
 
 
 class UsersSerializer(serializers.HyperlinkedModelSerializer):
@@ -96,7 +96,7 @@ class Customers(ViewSet):
         return Response(serializer.data)
 
     #Custom action to update user profile
-    @action(methods=['put'], detail=False, url_name='update_profile')
+    @action(methods=['put'], detail=False, url_name='profile_update')
     def profile_update(self, request):
         """
         Author: Lauren Riddle & Trey Suiter
@@ -107,29 +107,21 @@ class Customers(ViewSet):
             Response -- Empty body with 204 status code
         """
 
+        
+        # accesses the nested users last name
+        
+
         customer = Customer.objects.get(pk=request.auth.user.customer.id)
         customer.address = request.data["address"]
         customer.city = request.data["city"]
         customer.zipcode = request.data["zipcode"]
         customer.phone = request.data["phone"]
-        # accesses the nested users last name
-        customer.user.last_name = request.data["last_name"]
-        customer.user.first_name = request.data["first_name"]
-
         customer.save()
-        customer.user.save()
+
+        user = User.objects.get(pk=customer.user_id)
+        user.last_name = request.data["last_name"]
+        user.first_name = request.data["first_name"]
+        user.save()
 
         return Response({}, status=status.HTTP_204_NO_CONTENT)
 
-# def update(self, request, pk=None):
-#         """Handle PUT requests for a park area
-#         Returns:
-#             Response -- Empty body with 204 status code
-#         """
-#         itinerary_item = Itinerary.objects.get(pk=pk)
-#         itinerary_item.starttime = request.data["starttime"]
-#         itinerary_item.customer_id = request.auth.userid
-#         itinerary_item.attraction_id = request.data["attraction_id"]
-#         itinerary_item.save()
-
-#         return Response({}, status=status.HTTP_204_NO_CONTENT)
