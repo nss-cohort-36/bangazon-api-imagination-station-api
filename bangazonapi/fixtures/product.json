@@ -10,7 +10,7 @@
       "description": "A mighty bike for tiny tykes",
       "location": "Nashville",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2Fc16bfdb4-62ac-43fb-906f-533e5f6e7538.png?alt=media&token=49c26e22-da2e-4ff3-8b89-92b1a71bc263",
-      "created_at": "2020-02-21 00:00:00",
+      "created_at": "2020-03-04T15:25:33.337Z",
       "customer_id": 1,
       "product_type_id": 2
     }
@@ -26,7 +26,7 @@
       "description": "Grow with your child carseat, ages 0 to 10.",
       "location": "Franklin",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2Fda69fe74-1235-4228-b6a1-045f203f53df.png?alt=media&token=46016556-9970-4fa7-ae6d-5dc3be68da0a",
-      "created_at": "2020-02-21 00:00:00",
+      "created_at": "2020-03-04T15:25:33.337Z",
       "customer_id": 1,
       "product_type_id": 1
     }
@@ -74,6 +74,7 @@
       "quantity": 1,
       "location": "Spring Hill",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2F09a94f3e-7661-4a6e-9873-c4e5d81e70c9.png?alt=media&token=736c8b65-7741-4f43-9283-0cc328b47891",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 3
     }
@@ -89,6 +90,7 @@
       "quantity": 62,
       "location": "Brentwood",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2F1bfdcd75-a6f1-4fb2-a890-b03439cf64e2.png?alt=media&token=4b4693eb-8fae-4680-aa45-a964c9d24a34",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 4
     }
@@ -104,6 +106,7 @@
       "quantity": 20,
       "location": "Brentwood",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2Fdf3786e4-bc66-48f5-8c00-d6dfdffd640c.png?alt=media&token=13b24e8b-42da-4996-9740-bd3a90818f6a",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 5
     }
@@ -119,6 +122,7 @@
       "quantity": 20,
       "location": "Nashville",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2Fc4101cd0-8024-41d3-80d3-9dc0c79425a1.png?alt=media&token=cbc67ff3-3a91-47af-be37-d623fabdf219",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 6
     }
@@ -134,6 +138,7 @@
       "quantity": 5,
       "location": "Murfreesboro",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2F3e0e47d6-0c7c-48c1-b620-b54d8ada6cba.png?alt=media&token=e1590a0f-4f07-48df-aa64-2cb43d91f1c1",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 7
     }
@@ -149,6 +154,7 @@
       "quantity": 29,
       "location": "Los Angelos",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2Fc1f1603a-bde4-4437-ba39-20316f1fdfd5.png?alt=media&token=06735893-e23e-4913-ba49-c3a251aef243",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 8
     }
@@ -164,6 +170,7 @@
       "quantity": 100,
       "location": "Nashville",
       "image_path": "https://firebasestorage.googleapis.com/v0/b/bangazon-dd868.appspot.com/o/images%2F4defdb5d-2bd3-48f9-92b6-47db61827484.png?alt=media&token=d68079cb-4e1d-4636-ad49-d99ad0194218",
+      "created_at": "2020-03-05T19:50:35.575Z",
       "customer": 1,
       "product_type": 9
     }
