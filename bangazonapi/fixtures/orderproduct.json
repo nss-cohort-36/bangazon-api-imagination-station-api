@@ -1,0 +1,98 @@
+[
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 1,
+        "fields": {
+            "order": 1,
+            "product": 1
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 14,
+        "fields": {
+            "order": 1,
+            "product": 2
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 15,
+        "fields": {
+            "order": 1,
+            "product": 3
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 16,
+        "fields": {
+            "order": 2,
+            "product": 5
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 17,
+        "fields": {
+            "order": 2,
+            "product": 5
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 65,
+        "fields": {
+            "order": 2,
+            "product": 6
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 67,
+        "fields": {
+            "order": 2,
+            "product": 7
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 68,
+        "fields": {
+            "order": 2,
+            "product": 8
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 69,
+        "fields": {
+            "order": 3,
+            "product": 9
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 70,
+        "fields": {
+            "order": 3,
+            "product": 1
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 71,
+        "fields": {
+            "order": 1,
+            "product": 2
+        }
+    },
+    {
+        "model": "bangazonapi.orderproduct",
+        "pk": 72,
+        "fields": {
+            "order": 1,
+            "product": 9
+        }
+    }
+]
