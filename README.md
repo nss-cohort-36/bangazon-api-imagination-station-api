@@ -3,8 +3,8 @@
 ## Steps to get the Bangazon API started
 
 1. Create a new directory in your terminal. Clone down this repository by clicking the "Clone or Download" button above, copying the SSH key, and running the following command in your terminal `git clone sshKeyGoesHere`.
-1. `cd bangazon-api-imagination-station-api`
-1. Create your OSX virtual environment in Terminal:
+2. `cd bangazon-api-imagination-station-api`
+3. Create your OSX virtual environment in Terminal:
 
   - `python -m venv bangazonenv`
   - `source ./bangazonenv/bin/activate`
@@ -14,24 +14,24 @@
   - `python -m venv bangazonenv`
   - `source ./bangazonenv/Scripts/activate`
 
-1. Install the app's dependencies:
+4. Install the app's dependencies:
 
   - `pip install -r requirements.txt`
 
-1. Build your database from the existing models:
+5. Build your database from the existing models:
 
   - `python manage.py makemigrations bangazonapi`
   - `python manage.py migrate`
 
-- Create a superuser for your local version of the app:
+6. Create a superuser for your local version of the app:
 
   - `python manage.py createsuperuser`
 
-- Populate your database with initial data from fixtures files: (_NOTE: every time you run this it will remove existing data and repopulate the tables_)
+7. Populate your database with initial data from fixtures files: (_NOTE: every time you run this it will remove existing data and repopulate the tables_)
 
   - `python manage.py loaddata */fixtures/*.json`
 
-- Fire up your dev server and get to work!
+8. Fire up your dev server and get to work!
 
   - `python manage.py runserver`
 
