@@ -3,8 +3,7 @@ from django.http import HttpResponseServerError
 from django.db import connection
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
-from rest_framework import serializers
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework.decorators import action
 from bangazonapi.models import Product
 from .customers import CustomersSerializer
@@ -68,7 +67,6 @@ class Products(ViewSet):
 
             # Return a JSON response
             return Response(total)
-
 
     def create(self, request):
         """Handle POST operations
@@ -155,6 +153,7 @@ class Products(ViewSet):
 
         product_name = self.request.query_params.get('name', None)
         product_location = self.request.query_params.get('location', None)
+        product_type = self.request.query_params.get('type', None)
         is_one_customer = self.request.query_params.get('customer', False)
         if is_one_customer == 'true':
             products = products.filter(customer__id=customer_id)
@@ -164,6 +163,11 @@ class Products(ViewSet):
 
         if product_location is not None:
             products = products.filter(location=product_location)
+
+        if product_type is not None:
+            products = products.filter(product_type=product_type)
+
         serializer = ProductsSerializer(
             products, many=True, context={'request': request})
+
         return Response(serializer.data)
