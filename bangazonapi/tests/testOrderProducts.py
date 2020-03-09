@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from bangazonapi.models import Product, Customer, ProductType, Order, PaymentType, Product
 
-
+# Author: Michelle Johnson
 
 print("test file loaded------------------------")
 
@@ -21,7 +21,12 @@ class TestOrderProducts(TestCase):
 
         self.customer = Customer.objects.create(user_id=1)
         self.product_type = ProductType.objects.create(name="type for testing")
-        self.payment_type = PaymentType.objects.create(merchant_name="Visa", account_number="1234567", created_at="2020-03-04 20:41:57.004509", customer_id=self.customer.id, expiration_date="3020-12-31")
+        self.payment_type = PaymentType.objects.create(
+            merchant_name="Visa", 
+            account_number="1234567", 
+            created_at="2020-03-04 20:41:57.004509", 
+            customer_id=self.customer.id, 
+            expiration_date="3020-12-31")
 
         self.order = Order.objects.create(
             created_at="2020-02-24 15:32:15.551752", 
@@ -83,8 +88,30 @@ class TestOrderProducts(TestCase):
         # Finally, test the actual rendered content as the client would receive it.
         # .encode converts from unicode to utf-8. Don't get hung up on this. It's just how we can compare apples to apples
         self.assertIn(new_order_product.product.name.encode(), response.content)
+    
+    def test_delete_order_product(self):
+         # define a order product to be POSTed to the DB
 
-        print("HELP", )
+        new_order_product = OrderProduct.objects.create(
+            order_id = self.order.id,
+            product_id = self.product.id
+        )
+
+        # perform a delete on the object. Note: you have to reverse to orderproduct-detail sinces you are only targeting one object and not the whole list
+        response = self.client.delete(reverse('orderproduct-detail', kwargs={'pk':1}),  HTTP_AUTHORIZATION='Token ' + str(self.token))
+
+        # Check that the respons is 204 OK.
+        self.assertEqual(response.status_code, 204)
+
+        # grab all the order products from the db. In this case there should be 0
+        response = self.client.get(reverse('orderproduct-lost'), HTTP_AUTHORIZATION='Token ' + str(self.token))
+
+        # Check that the response is 200 OK.
+        self.assertEqual(response.status_code, 200)
+
+        # test that the length of the response is 0, which means that delete was successful
+        self.assertEqual(len(sesponse.data), 0)
+    
 
 
 if __name__ == '__main__':
