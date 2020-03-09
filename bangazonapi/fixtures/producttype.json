@@ -3,7 +3,79 @@
     "model": "bangazonapi.producttype",
     "pk": 1,
     "fields": {
-      "name": "Baby Mobility"
+      "name": "Baby"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 2,
+    "fields": {
+      "name": "Toys"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 3,
+    "fields": {
+      "name": "Appliances"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 4,
+    "fields": {
+      "name": "Automotive"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 5,
+    "fields": {
+      "name": "Music"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 6,
+    "fields": {
+      "name": "Movies"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 7,
+    "fields": {
+      "name": "Books"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 8,
+    "fields": {
+      "name": "Clothing"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 9,
+    "fields": {
+      "name": "Food and Drink"
+    }
+  },
+
+  {
+    "model": "bangazonapi.producttype",
+    "pk": 10,
+    "fields": {
+      "name": "Decor"
     }
   }
 ]

@@ -1,0 +1,20 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$180000$MKiZYXtGHSv6$9TV7khbseJKMwvvT0tLine4fcPwt03FcAaLJSUICakM=",
+            "last_login": null,
+            "is_superuser": false,
+            "username": "Sally Fletcher",
+            "first_name": "Sally",
+            "last_name": "Fletcher",
+            "email": "sallz@email.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-02-24T15:07:23.961Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    }
+]
